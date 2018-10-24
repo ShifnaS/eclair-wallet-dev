@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="notificationPresenter"
+            type="fr.acinq.eclair.wallet.presenter.NotificationPresenter"/>
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/content_notification"
+        android:background="?android:windowBackground"
+
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical"
+
+            >
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@drawable/rounded_corner_button"
+
+                >
+                <TableRow
+                    android:background="@color/blue_light_x2"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:visibility="gone"
+                        android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:textColor="@android:color/white" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:textStyle="bold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textAlignment="center"
+                        android:text="@string/the_following_regular_payments_are_awaiting_your_authorisation_untick_any_payments_you_no_longer_wish_to_pay"
+                        android:textColor="@android:color/white" />
+
+                </TableRow>
+                <TableRow
+                    android:padding="8dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Service A"
+                        android:textSize="@dimen/textSize"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1st April"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=".24 BTC"
+                        android:textColor="@color/blue_light_x1" />
+                    <CheckBox
+                      android:checked="true"
+                      android:buttonTint="@color/blue_light_x1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".001"/>
+                </TableRow>
+                <TableRow
+                    android:padding="8dp">
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Service B"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1st April"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=".23 BTC"
+                        android:textColor="@color/blue_light_x1" />
+                    <CheckBox
+                      android:buttonTint="@color/blue_light_x1"
+                        android:checked="true"
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".001"/>
+                </TableRow>
+                <TableRow
+                    android:padding="8dp">
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Service C"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="1st April"
+                        android:textColor="@color/blue_light_x1" />
+                    <TextView
+                      android:textSize="@dimen/textSize"
+
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=".21 BTC"
+                        android:textColor="@color/blue_light_x1" />
+                    <CheckBox
+                      android:buttonTint="@color/blue_light_x1"
+                      android:checked="true"
+                      android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".001"/>
+                </TableRow>
+            </TableLayout>
+            <Button
+                android:id="@+id/payment"
+              android:textSize="@dimen/textSize"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+
+              android:background="@drawable/rounded_corner_blue"
+                android:onClick="@{(v)->notificationPresenter.makePayment()}"
+                android:text="@string/make_payment"
+                android:textColor="@color/white" />
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+              android:textSize="@dimen/textSize"
+
+              android:background="@drawable/rounded_corner_blue"
+                android:onClick="@{(v)->notificationPresenter.cancel()}"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+
+</layout>

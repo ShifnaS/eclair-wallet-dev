@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="manageRegularPaymentPresenter"
+            type="fr.acinq.eclair.wallet.presenter.ManageRegularPaymentPresenter"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal|center_vertical"
+        android:id="@+id/content_regular_pay"
+        >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="@drawable/rounded_corner_button"
+
+            >
+            <TableRow
+                android:background="@color/blue_light_x1"
+                android:padding="8dp">
+
+                <TextView
+                    android:textStyle="bold"
+                  android:textSize="@dimen/textSize"
+
+                  android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/invoice_schedule"
+                    android:textColor="@android:color/white" />
+                <TextView
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/active"
+                  android:textSize="@dimen/textSize"
+
+                  android:textColor="@android:color/white" />
+            </TableRow>
+            <TableRow
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/textSize"
+                    android:text="Nougat"
+                    android:textColor="@color/blue_light_x1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                  android:textSize="@dimen/textSize"
+
+                  android:text="24"
+                    android:textColor="@color/blue_light_x1" />
+            </TableRow>
+            <TableRow
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Marshmallow"
+                  android:textSize="@dimen/textSize"
+
+                  android:textColor="@color/blue_light_x1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="23"
+                  android:textSize="@dimen/textSize"
+
+                  android:textColor="@color/blue_light_x1" />
+            </TableRow>
+            <TableRow
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Android Lollipop"
+                  android:textSize="@dimen/textSize"
+
+                  android:textColor="@color/blue_light_x1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="21"
+                  android:textSize="@dimen/textSize"
+
+                  android:textColor="@color/blue_light_x1" />
+            </TableRow>
+        </TableLayout>
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:textSize="10dp"
+            android:background="@drawable/rounded_corner_blue"
+            android:onClick="@{(v)->manageRegularPaymentPresenter.view()}"
+            android:text="@string/view"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+
+
+</layout>
