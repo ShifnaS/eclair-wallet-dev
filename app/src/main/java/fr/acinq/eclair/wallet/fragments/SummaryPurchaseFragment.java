@@ -29,9 +29,11 @@ import scala.Int;
 public class SummaryPurchaseFragment extends Fragment {
 
     String[] day;
-    String dayy;
+    String dayy="1";
     ScheduleDataList dataList;
-    private SummaryPurchaseViewModel summaryPurchaseViewModel;
+    String f="";
+    String s="";
+    private SummaryPurchaseViewModel summaryPurchaseViewModel,summaryPurchaseViewModel1,summaryPurchaseViewModel2;
 
     public SummaryPurchaseFragment() {
         // Required empty public constructor
@@ -57,7 +59,7 @@ public class SummaryPurchaseFragment extends Fragment {
         String qr_code=bundle.getString("qr_code");
         Integer schedule_type=bundle.getInt("schedule_type");
         String payment_month=bundle.getString("payment_month");
-
+        String days="";
 
         day = new String[28];
         for(int i=0;i<28;i++)
@@ -65,49 +67,104 @@ public class SummaryPurchaseFragment extends Fragment {
           int d=i+1;
           day[i]=""+d;
         }
-
-
-        String f="";
-        String s="";
-        if(frequency==1)
-        {
-          f="monthly";
-        }
-        else
-        {
-          f="annually";
-        }
         if(schedule_type==1)
         {
+
           binding.day.setVisibility(View.VISIBLE);
         }
         else
         {
+
           binding.day.setVisibility(View.INVISIBLE);
         }
-        if(service_name.equalsIgnoreCase("A"))
-        {
 
-          s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-            "Cost = "+amount +"\n Frequency = "+f+"\n\n" +
-            "Payment Date = "+payment_day+" of the month";
-          /*
-          binding.summary.setText("Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-            "Cost = "+amount +"\n Frequency = "+f+"\n\n" +
-            "Payment Date = "+payment_day+" of the "+payment_month);*/
+
+        if(frequency==1)
+        {
+          f="monthly";
+          if(service_name.equalsIgnoreCase("A"))
+          {
+            if(schedule_type==1)
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n ";
+                dayy="Payment Date = 1 of the month";
+            }
+            else
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n";
+              dayy="Payment Date = "+payment_day+" of the "+payment_month;
+
+            }
+
+
+          }
+          else
+          {
+            if(schedule_type==1)
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
+              dayy="Payment Date = 1 of the month";
+
+            }
+            else
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+              dayy="Payment Date = "+payment_day+" of the "+payment_month;
+            }
+
+
+          }
         }
         else
         {
-          s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-            "Cost = "+amount +"\n Frequency = "+f+"\n\n" +
-            "Payment Date = "+payment_day+" of the "+payment_month;
-        /*  binding.summary.setText("Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-            "Cost = "+amount +"\n Frequency = "+f+"\n\n" +
-            "Payment Date = "+payment_day+" of the "+payment_month);*/
-        }
-        summaryPurchaseViewModel=new SummaryPurchaseViewModel(s);
-        binding.setSummarypurchase(summaryPurchaseViewModel);
+          f="annually";
+          if(service_name.equalsIgnoreCase("A"))
+          {
+            if(schedule_type==1)
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+              dayy="Payment Date = 1 of the month";
+            }
+            else
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n";
+              dayy="Payment Date = "+payment_day+" of the "+payment_month;
 
+            }
+
+
+
+          }
+          else
+          {
+            if(schedule_type==1)
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
+              dayy="Payment Date = 1 of the month";
+            }
+            else
+            {
+              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+              dayy="Payment Date = "+payment_day+" of the "+payment_month;
+            }
+
+
+
+          }
+        }
+
+
+      summaryPurchaseViewModel=new SummaryPurchaseViewModel(s,dayy);
+      binding.setSummarypurchase(summaryPurchaseViewModel);
+
+     /* summaryPurchaseViewModel=new SummaryPurchaseViewModel(dayy,"");
+      binding.setSummarypurchase(summaryPurchaseViewModel);*/
 
       binding.np.setMinValue(0); //from array first value
       binding.np.setMaxValue(day.length-1); //to array last value
@@ -139,7 +196,20 @@ public class SummaryPurchaseFragment extends Fragment {
 
         @Override
         public void onValChange(int old, int newval) {
-         dayy=day[newval];
+          if(frequency==1)
+          {
+            dayy="Payment Date = "+day[newval]+" of the month";
+          }
+          else
+          {
+            dayy="Payment Date = "+payment_day+" of the "+payment_month;
+
+          }
+
+
+         // Toast.makeText(getContext(), ""+dayy, Toast.LENGTH_SHORT).show();
+          summaryPurchaseViewModel=new SummaryPurchaseViewModel(s,dayy);
+          binding.setSummarypurchase(summaryPurchaseViewModel);
         }
 
 

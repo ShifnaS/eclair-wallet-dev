@@ -73,9 +73,8 @@ public class NewRegularPaymentFragment extends Fragment {
             public void confirm()  {
                try
                {
-                 ScheduleDataList data ;
-                 List<ScheduleDataList> scheduleDataListList;
                  final String invoice_id = binding.invoiceId.getText().toString().trim();
+                 Toast.makeText(getContext(), "invoice id "+invoice_id, Toast.LENGTH_SHORT).show();
                  if(invoice_id.equals(""))
                  {
                    Toast.makeText(getContext(), "Please enter an invoice id or scan an invoice", Toast.LENGTH_SHORT).show();
@@ -90,9 +89,8 @@ public class NewRegularPaymentFragment extends Fragment {
                    {
                      if(response.equalsIgnoreCase("success"))
                      {
-                       data=new ScheduleDataList();
-                       scheduleDataListList=new ArrayList<ScheduleDataList>();
-                       JSONArray jsonArray = jo.getJSONArray("responds");
+
+                       JSONArray jsonArray = jo.getJSONArray("response");
                        //now looping through all the elements of the json array
                        for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -110,19 +108,7 @@ public class NewRegularPaymentFragment extends Fragment {
                          String schedule_id=jsonObject.getString("schedule_id");
                          String payment_month=jsonObject.getString("payment_month");
 
-                       /*data.set_id(_id);
-                       data.setService_name(service_name);
-                       data.setImmediate_cost(immediate_cost);
-                       data.setAmount(amount);
-                       data.setFrequency(frequency);
-                       data.setPayment_day(payment_date);
-                       data.setQr_code(qr_code);
-                       data.setSchedule_type(schedule_type);
-                       data.setSchedule_id(schedule_id);
-                       data.setPayment_month(payment_month);*/
 
-                         // data = new ScheduleDataList(_id,service_name,immediate_cost,amount,frequency,payment_date,qr_code,schedule_type,schedule_id,payment_month);
-                         //  scheduleDataListList.add(data);
                          Bundle bundle = new Bundle();
                          bundle.putString("_id",  _id);
                          bundle.putString("service_name",  service_name);
