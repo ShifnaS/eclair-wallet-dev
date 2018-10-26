@@ -41,7 +41,6 @@ public class LightningFragment extends Fragment {
             @Override
             public void regularPayment() {
                 String tag="Lightning";
-                Toast.makeText(getContext(), "hii", Toast.LENGTH_SHORT).show();
                 Fragment fragment = new NewRegularPaymentFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -32,7 +32,7 @@
 
                 >
                 <TableRow
-                    android:background="@color/blue_light_x2"
+                    android:background="@color/primary_light_x1"
                     android:padding="8dp">
 
                     <TextView
@@ -62,7 +62,7 @@
                         android:layout_weight="1"
                         android:text="Service A"
                         android:textSize="@dimen/textSize"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="1st April"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -78,10 +78,10 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text=".24 BTC"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <CheckBox
                       android:checked="true"
-                      android:buttonTint="@color/blue_light_x1"
+                      android:buttonTint="@color/green"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight=".001"/>
@@ -95,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Service B"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="1st April"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -111,9 +111,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text=".23 BTC"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <CheckBox
-                      android:buttonTint="@color/blue_light_x1"
+                      android:buttonTint="@color/green"
                         android:checked="true"
                       android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -128,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Service C"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="1st April"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <TextView
                       android:textSize="@dimen/textSize"
 
@@ -144,9 +144,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text=".21 BTC"
-                        android:textColor="@color/blue_light_x1" />
+                        android:textColor="@color/grey_4" />
                     <CheckBox
-                      android:buttonTint="@color/blue_light_x1"
+                      android:buttonTint="@color/green"
                       android:checked="true"
                       android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
 
-              android:background="@drawable/rounded_corner_blue"
+              android:background="@drawable/rounded_corner_green"
                 android:onClick="@{(v)->notificationPresenter.makePayment()}"
                 android:text="@string/make_payment"
                 android:textColor="@color/white" />
@@ -171,7 +171,7 @@
                 android:layout_margin="10dp"
               android:textSize="@dimen/textSize"
 
-              android:background="@drawable/rounded_corner_blue"
+              android:background="@drawable/rounded_corner_green"
                 android:onClick="@{(v)->notificationPresenter.cancel()}"
                 android:text="@string/cancel"
                 android:textColor="@color/white" />

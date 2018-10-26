@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/new_regular_payment"
-                    android:textColor="@color/green"
+                    android:textColor="@color/grey_4"
                     android:background="@drawable/rounded_corner_button"
                     />
                 <ImageButton
@@ -74,7 +74,7 @@
                 android:text="@string/manage_regular_payment"
                 android:onClick="@{(v)->lightningPresenter.manageregularPayment()}"
 
-                android:textColor="@color/green"
+                android:textColor="@color/grey_4"
                 android:background="@drawable/rounded_corner_button"
                 />
             <LinearLayout

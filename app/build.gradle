@@ -93,7 +93,7 @@ dependencies {
   implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
   implementation "com.google.dagger:dagger:2.13"
   annotationProcessor "com.google.dagger:dagger-compiler:2.13"
-
+  implementation 'com.google.code.gson:gson:2.8.0'
 
   testImplementation 'junit:junit:4.12'
   androidTestImplementation('com.typesafe.akka:akka-testkit_2.11:2.3.14') {

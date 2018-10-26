@@ -74,9 +74,12 @@ import fr.acinq.eclair.wallet.events.LNPaymentSuccessEvent;
 import fr.acinq.eclair.wallet.events.PaymentEvent;
 import fr.acinq.eclair.wallet.fragments.ChannelsListFragment;
 import fr.acinq.eclair.wallet.fragments.LightningFragment;
+import fr.acinq.eclair.wallet.fragments.NewRegularPaymentFragment;
 import fr.acinq.eclair.wallet.fragments.NotificationFragment;
 import fr.acinq.eclair.wallet.fragments.PaymentsListFragment;
 import fr.acinq.eclair.wallet.fragments.ReceivePaymentFragment;
+import fr.acinq.eclair.wallet.models.ScheduleDataList;
+import fr.acinq.eclair.wallet.presenter.NewRegularPaymentPresenter;
 import fr.acinq.eclair.wallet.utils.Constants;
 import fr.acinq.eclair.wallet.utils.WalletUtils;
 
@@ -609,5 +612,6 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
       return titles[position];
     }
   }
+
 
 }

@@ -3,7 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable
+      <variable
+        name="regularpayment"
+        type="fr.acinq.eclair.wallet.viewmodel.RegularPaymentViewModel"/>
+
+      <variable
             name="newRegularPaymentPresenter"
             type="fr.acinq.eclair.wallet.presenter.NewRegularPaymentPresenter"/>
     </data>
@@ -34,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="Enter or Scan an Invoice Schedule ID"
-                android:textColor="@color/blue_light_x1"
+                android:textColor="@color/grey_4"
                 android:background="@drawable/rounded_corner_button"
                 />
             <LinearLayout
@@ -49,11 +53,11 @@
                     android:layout_width="0dp"
                     android:layout_height="200dp"
                     android:textSize="@dimen/textSize"
-
-                  android:layout_weight="1"
-                    android:hint="@string/abcdxyz123"
-                    android:textColorHint="@color/blue_light_x1"
-                    android:textColor="@color/blue_light_x1"
+                    android:id="@+id/invoice_id"
+                    android:text="@={regularpayment.invoice_id}"
+                    android:layout_weight="1"
+                    android:textColorHint="@color/grey_4"
+                    android:textColor="@color/grey_4"
                     android:background="@drawable/rounded_corner_button"
                     />
                 <ImageButton
@@ -74,13 +78,13 @@
                 android:id="@+id/confirm"
                 android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="@string/confirm"
                 android:textColor="@color/white"
                  android:textSize="@dimen/textSize"
 
               android:onClick="@{(v)->newRegularPaymentPresenter.confirm()}"
-                android:background="@drawable/rounded_corner_blue"/>
+                android:background="@drawable/rounded_corner_green"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
