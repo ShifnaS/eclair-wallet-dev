@@ -52,12 +52,12 @@ public class SummaryPurchaseFragment extends Fragment {
 
         String id=bundle.getString("_id");
         String service_name=bundle.getString("service_name");
-        Integer immediate_cost=bundle.getInt("immediate_cost");
-        Integer amount=bundle.getInt("amount");
-        Integer frequency=bundle.getInt("frequency");
-        Integer payment_day=bundle.getInt("payment_date");
+        String immediate_cost=bundle.getString("immediate_cost");
+        String amount=bundle.getString("amount");
+        String frequency=bundle.getString("frequency");
+        String payment_day=bundle.getString("payment_date");
         String qr_code=bundle.getString("qr_code");
-        Integer schedule_type=bundle.getInt("schedule_type");
+        String schedule_type=bundle.getString("schedule_type");
         String payment_month=bundle.getString("payment_month");
         String days="";
 
@@ -67,7 +67,7 @@ public class SummaryPurchaseFragment extends Fragment {
           int d=i+1;
           day[i]=""+d;
         }
-        if(schedule_type==1)
+        if(schedule_type.equals("1"))
         {
 
           binding.day.setVisibility(View.VISIBLE);
@@ -79,12 +79,12 @@ public class SummaryPurchaseFragment extends Fragment {
         }
 
 
-        if(frequency==1)
+        if(frequency.equals("1"))
         {
           f="monthly";
           if(service_name.equalsIgnoreCase("A"))
           {
-            if(schedule_type==1)
+            if(schedule_type.equals("1"))
             {
               s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
                 "Cost = "+amount +"\n Frequency = "+f+"\n\n ";
@@ -102,7 +102,7 @@ public class SummaryPurchaseFragment extends Fragment {
           }
           else
           {
-            if(schedule_type==1)
+            if(schedule_type.equals("1"))
             {
               s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
                 "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
@@ -124,7 +124,7 @@ public class SummaryPurchaseFragment extends Fragment {
           f="annually";
           if(service_name.equalsIgnoreCase("A"))
           {
-            if(schedule_type==1)
+            if(schedule_type.equals("1"))
             {
               s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
               dayy="Payment Date = 1 of the month";
@@ -141,7 +141,7 @@ public class SummaryPurchaseFragment extends Fragment {
           }
           else
           {
-            if(schedule_type==1)
+            if(schedule_type.equals("1"))
             {
               s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
                 "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
@@ -196,15 +196,102 @@ public class SummaryPurchaseFragment extends Fragment {
 
         @Override
         public void onValChange(int old, int newval) {
-          if(frequency==1)
+          /*if(frequency.equals("1"))
           {
+
             dayy="Payment Date = "+day[newval]+" of the month";
           }
           else
           {
             dayy="Payment Date = "+payment_day+" of the "+payment_month;
 
+          }*/
+
+
+          if(frequency.equals("1"))
+          {
+            f="monthly";
+            if(service_name.equalsIgnoreCase("A"))
+            {
+              if(schedule_type.equals("1"))
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n ";
+                dayy="Payment Date = "+day[newval]+" of the month";
+              }
+              else
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n";
+                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+
+              }
+
+
+            }
+            else
+            {
+              if(schedule_type.equals("1"))
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
+                dayy="Payment Date = "+day[newval]+" of the month";
+
+              }
+              else
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+              }
+
+
+            }
           }
+          else
+          {
+            f="annually";
+            if(service_name.equalsIgnoreCase("A"))
+            {
+              if(schedule_type.equals("1"))
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+                dayy="Payment Date = "+day[newval]+" of the month";
+              }
+              else
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n";
+                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+
+              }
+
+
+
+            }
+            else
+            {
+              if(schedule_type.equals("1"))
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
+                dayy="Payment Date = "+day[newval]+" of the month";
+              }
+              else
+              {
+                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                  "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+              }
+
+
+
+            }
+          }
+
+
+
+
+
 
 
          // Toast.makeText(getContext(), ""+dayy, Toast.LENGTH_SHORT).show();

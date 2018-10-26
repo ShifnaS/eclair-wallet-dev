@@ -97,27 +97,58 @@ public class NewRegularPaymentFragment extends Fragment {
                          Fragment fragment = new SummaryPurchaseFragment();
                          JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+                         String service_name="",immediate_cost="",payment_month="",payment_date;
+
                          String _id=jsonObject.getString("_id");
-                         String service_name=jsonObject.getString("service_name");
-                         Integer immediate_cost=jsonObject.getInt("immediate_cost");
-                         Integer amount=jsonObject.getInt("amount");
-                         Integer frequency=jsonObject.getInt("frequency");
-                         Integer payment_date=jsonObject.getInt("payment_day");
+                         if(jsonObject.has("service_name"))
+                         {
+                           service_name=jsonObject.getString("service_name");
+                         }
+                         else
+                         {
+                           service_name="";
+                         }
+                         if(jsonObject.has("immediate_cost"))
+                         {
+                           immediate_cost=jsonObject.getString("immediate_cost");
+                         }
+                         else
+                         {
+                           immediate_cost="";
+                         }
+                         if(jsonObject.has("payment_month"))
+                         {
+                           payment_month=jsonObject.getString("payment_month");
+                         }
+                         else
+                         {
+                           payment_month="";
+                         }
+                         if(jsonObject.has("payment_date"))
+                         {
+                           payment_date=jsonObject.getString("payment_date");
+                         }
+                         else
+                         {
+                           payment_date="";
+                         }
+
+                         String amount=jsonObject.getString("amount");
+                         String frequency=jsonObject.getString("frequency");
                          String qr_code=jsonObject.getString("qr_code");
-                         Integer schedule_type=jsonObject.getInt("schedule_type");
+                         String schedule_type=jsonObject.getString("schedule_type");
                          String schedule_id=jsonObject.getString("schedule_id");
-                         String payment_month=jsonObject.getString("payment_month");
 
 
                          Bundle bundle = new Bundle();
                          bundle.putString("_id",  _id);
                          bundle.putString("service_name",  service_name);
-                         bundle.putInt("immediate_cost",  immediate_cost);
-                         bundle.putInt("amount",  amount);
-                         bundle.putInt("frequency",  frequency);
-                         bundle.putInt("payment_date",  payment_date);
+                         bundle.putString("immediate_cost",  immediate_cost);
+                         bundle.putString("amount",  amount);
+                         bundle.putString("frequency",  frequency);
+                         bundle.putString("payment_date",  payment_date);
                          bundle.putString("qr_code",  qr_code);
-                         bundle.putInt("schedule_type",  schedule_type);
+                         bundle.putString("schedule_type",  schedule_type);
                          bundle.putString("schedule_id",  schedule_id);
                          bundle.putString("payment_month",  payment_month);
                          fragment.setArguments(bundle);
