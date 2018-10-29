@@ -104,7 +104,7 @@ public class SummaryPurchaseFragment extends Fragment {
           {
             if(schedule_type.equals("1"))
             {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+              s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
                 "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
               dayy="Payment Date = 1 of the month";
 
@@ -143,7 +143,7 @@ public class SummaryPurchaseFragment extends Fragment {
           {
             if(schedule_type.equals("1"))
             {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+              s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
                 "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
               dayy="Payment Date = 1 of the month";
             }
@@ -233,7 +233,7 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               if(schedule_type.equals("1"))
               {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                s="Summary of Purchase \n Name – Service "+service_name+" \n\n" +
                   "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
                 dayy="Payment Date = "+day[newval]+" of the month";
 
@@ -272,7 +272,7 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               if(schedule_type.equals("1"))
               {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
+                s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
                   "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
                 dayy="Payment Date = "+day[newval]+" of the month";
               }

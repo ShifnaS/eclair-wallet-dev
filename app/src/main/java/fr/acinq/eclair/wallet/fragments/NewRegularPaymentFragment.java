@@ -97,7 +97,7 @@ public class NewRegularPaymentFragment extends Fragment {
                          Fragment fragment = new SummaryPurchaseFragment();
                          JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                         String service_name="",immediate_cost="",payment_month="",payment_date;
+                         String schedule_id="", schedule_type="",service_name="",immediate_cost="",payment_month="",payment_date="",qr_code="",amount="",frequency="";
 
                          String _id=jsonObject.getString("_id");
                          if(jsonObject.has("service_name"))
@@ -132,12 +132,46 @@ public class NewRegularPaymentFragment extends Fragment {
                          {
                            payment_date="";
                          }
-
-                         String amount=jsonObject.getString("amount");
-                         String frequency=jsonObject.getString("frequency");
-                         String qr_code=jsonObject.getString("qr_code");
-                         String schedule_type=jsonObject.getString("schedule_type");
-                         String schedule_id=jsonObject.getString("schedule_id");
+                         if(jsonObject.has("qr_code"))
+                         {
+                           qr_code=jsonObject.getString("qr_code");
+                         }
+                         else
+                         {
+                           qr_code="";
+                         }
+                         if(jsonObject.has("amount"))
+                         {
+                           amount=jsonObject.getString("amount");
+                         }
+                         else
+                         {
+                           amount="";
+                         }
+                         if(jsonObject.has("frequency"))
+                         {
+                           frequency=jsonObject.getString("frequency");
+                         }
+                         else
+                         {
+                           frequency="";
+                         }
+                         if(jsonObject.has("schedule_type"))
+                         {
+                           schedule_type=jsonObject.getString("schedule_type");
+                         }
+                         else
+                         {
+                           frequency="";
+                         }
+                         if(jsonObject.has("schedule_id"))
+                         {
+                           schedule_id=jsonObject.getString("schedule_id");
+                         }
+                         else
+                         {
+                           schedule_id="";
+                         }
 
 
                          Bundle bundle = new Bundle();
