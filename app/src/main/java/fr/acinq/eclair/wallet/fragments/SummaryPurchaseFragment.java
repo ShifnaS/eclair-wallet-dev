@@ -16,6 +16,7 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import fr.acinq.eclair.wallet.R;
@@ -79,92 +80,73 @@ public class SummaryPurchaseFragment extends Fragment {
         }
 
 
-        if(frequency.equals("1"))
+
+
+        if(schedule_type.equals("1"))
         {
-          f="monthly";
-          if(service_name.equalsIgnoreCase("A"))
+          //static
+          if(frequency.equals("1"))
           {
-            if(schedule_type.equals("1"))
-            {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n ";
-                dayy="Payment Date = 1 of the month";
-            }
-            else
-            {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n";
-              dayy="Payment Date = "+payment_day+" of the "+payment_month;
-
-            }
-
-
+            //monthly
+            s="Summary of Purchase \n\n" +
+              "Cost = "+amount +"\n Frequency = monthly \n\n ";
+              dayy="Payment Date = 1 of every month";
           }
           else
           {
-            if(schedule_type.equals("1"))
-            {
-              s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
-              dayy="Payment Date = 1 of the month";
-
-            }
-            else
-            {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
-              dayy="Payment Date = "+payment_day+" of the "+payment_month;
-            }
-
+            //annually
+            String month=getMonth(1);
+            s="Summary of Purchase \n\n" +
+              "Cost = "+amount +"\n Frequency = annually \n\n ";
+            dayy="Payment Date = 1 of the "+month;
 
           }
         }
         else
         {
-          f="annually";
-          if(service_name.equalsIgnoreCase("A"))
+          //dynamic
+          if(frequency.equals("1"))
           {
-            if(schedule_type.equals("1"))
+            //monthly
+            if(service_name.equalsIgnoreCase("A"))
             {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
-              dayy="Payment Date = 1 of the month";
+              //service A
+              s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
+                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+              dayy="Payment Date = "+payment_day+" of the every month";
             }
             else
             {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n";
-              dayy="Payment Date = "+payment_day+" of the "+payment_month;
-
+              // other services
+              s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
+                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+              dayy="Payment Date = "+payment_day+" of the every month";
             }
-
-
 
           }
           else
           {
-            if(schedule_type.equals("1"))
+            //annually
+            if(service_name.equalsIgnoreCase("A"))
             {
-              s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
-              dayy="Payment Date = 1 of the month";
+              s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
+                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+              dayy="Payment Date = "+payment_day+" of the "+payment_month;
             }
             else
             {
-              s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-                "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+              s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
+                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
               dayy="Payment Date = "+payment_day+" of the "+payment_month;
             }
-
-
 
           }
         }
 
-
       summaryPurchaseViewModel=new SummaryPurchaseViewModel(s,dayy);
       binding.setSummarypurchase(summaryPurchaseViewModel);
 
-     /* summaryPurchaseViewModel=new SummaryPurchaseViewModel(dayy,"");
-      binding.setSummarypurchase(summaryPurchaseViewModel);*/
+
 
       binding.np.setMinValue(0); //from array first value
       binding.np.setMaxValue(day.length-1); //to array last value
@@ -196,105 +178,69 @@ public class SummaryPurchaseFragment extends Fragment {
 
         @Override
         public void onValChange(int old, int newval) {
-          /*if(frequency.equals("1"))
+
+          if(schedule_type.equals("1"))
           {
-
-            dayy="Payment Date = "+day[newval]+" of the month";
-          }
-          else
-          {
-            dayy="Payment Date = "+payment_day+" of the "+payment_month;
-
-          }*/
-
-
-          if(frequency.equals("1"))
-          {
-            f="monthly";
-            if(service_name.equalsIgnoreCase("A"))
+            //static
+            if(frequency.equals("1"))
             {
-              if(schedule_type.equals("1"))
-              {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n ";
-                dayy="Payment Date = "+day[newval]+" of the month";
-              }
-              else
-              {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n \n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n";
-                dayy="Payment Date = "+payment_day+" of the "+payment_month;
-
-              }
-
-
+              //monthly
+              s="Summary of Purchase \n\n" +
+                "Cost = "+amount +"\n Frequency = monthly \n\n ";
+              dayy="Payment Date = "+day[newval]+" of every month";
             }
             else
             {
-              if(schedule_type.equals("1"))
-              {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n\n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
-                dayy="Payment Date = "+day[newval]+" of the month";
-
-              }
-              else
-              {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
-                dayy="Payment Date = "+payment_day+" of the "+payment_month;
-              }
-
+              //annually
+              String m=day[newval];
+              int mm=Integer.parseInt(m);
+              String month=getMonth(mm);
+              s="Summary of Purchase \n\n" +
+                "Cost = "+amount +"\n Frequency = annually \n\n ";
+              dayy="Payment Date = "+day[newval]+" of the "+month;
 
             }
           }
           else
           {
-            f="annually";
-            if(service_name.equalsIgnoreCase("A"))
+            //dynamic
+            if(frequency.equals("1"))
             {
-              if(schedule_type.equals("1"))
+              //monthly
+              if(service_name.equalsIgnoreCase("A"))
               {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
-                dayy="Payment Date = "+day[newval]+" of the month";
+                //service A
+                s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
+                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                dayy="Payment Date = "+payment_day+" of the every month";
               }
               else
               {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n \n Cost = "+amount +"\n Frequency = "+f+"\n\n";
-                dayy="Payment Date = "+payment_day+" of the "+payment_month;
-
+                // other services
+                s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
+                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                dayy="Payment Date = "+payment_day+" of the every month";
               }
-
-
 
             }
             else
             {
-              if(schedule_type.equals("1"))
+              //annually
+              if(service_name.equalsIgnoreCase("A"))
               {
-                s="Summary of Purchase \n Name – Service "+service_name+"  \n\n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n " ;
-                dayy="Payment Date = "+day[newval]+" of the month";
+                s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
+                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                dayy="Payment Date = "+payment_day+" of the "+payment_month;
               }
               else
               {
-                s="Summary of Purchase \n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n" +
-                  "Cost = "+amount +"\n Frequency = "+f+"\n\n" ;
+                s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
+                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
                 dayy="Payment Date = "+payment_day+" of the "+payment_month;
               }
 
-
-
             }
           }
-
-
-
-
-
-
-
-         // Toast.makeText(getContext(), ""+dayy, Toast.LENGTH_SHORT).show();
           summaryPurchaseViewModel=new SummaryPurchaseViewModel(s,dayy);
           binding.setSummarypurchase(summaryPurchaseViewModel);
         }
@@ -304,7 +250,28 @@ public class SummaryPurchaseFragment extends Fragment {
 
         return root;
     }
+  public String getMonth(int day)
+  {
+    String month="";
+    Calendar c = Calendar.getInstance();
+    String[]monthName={"January","February","March", "April", "May", "June", "July",
+      "August", "September", "October", "November",
+      "December"};
 
+    int dom = c.get(Calendar.DAY_OF_MONTH);
+    if(day<dom)
+    {
+      month=monthName[c.get(Calendar.MONTH)+1];
+
+    }
+    else
+    {
+      month=monthName[c.get(Calendar.MONTH)];
+
+    }
+
+    return  month;
+  }
 
 
 }
