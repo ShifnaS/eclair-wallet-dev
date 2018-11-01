@@ -27,6 +27,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -64,6 +65,7 @@ public class ScanActivity extends Activity {
 
         final Handler dismissHandler = new Handler();
         dismissHandler.postDelayed(() -> {
+          //Toast.makeText(ScanActivity.this, "scan "+scan, Toast.LENGTH_SHORT).show();
           if (isInvoice) {
             Intent intent = new Intent(getBaseContext(), SendPaymentActivity.class);
             intent.putExtra(SendPaymentActivity.EXTRA_INVOICE, scan);

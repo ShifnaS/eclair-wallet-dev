@@ -27,6 +27,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import org.bitcoinj.uri.BitcoinURI;
 import org.greenrobot.eventbus.util.AsyncExecutor;
@@ -482,6 +483,10 @@ public class SendPaymentActivity extends EclairActivity
     preferredFiatCurrency = WalletUtils.getPreferredFiat(sharedPref);
     capLightningFees = sharedPref.getBoolean(Constants.SETTING_CAP_LIGHTNING_FEES, true);
     mBinding.amountEditableUnit.setText(preferredBitcoinUnit.shortLabel());
+
+
+   // Toast.makeText(app, ""+mBinding.amountEditableValue.getText().toString(), Toast.LENGTH_SHORT).show();
+
 
     mBinding.amountEditableValue.addTextChangedListener(new TextWatcher() {
       @Override

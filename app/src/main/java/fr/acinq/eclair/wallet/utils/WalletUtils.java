@@ -230,7 +230,7 @@ public class WalletUtils {
    * Gets the user's preferred fiat currency. Default is USD.
    */
   public static String getPreferredFiat(final SharedPreferences prefs) {
-    return prefs.getString(Constants.SETTING_SELECTED_FIAT_CURRENCY, Constants.FIAT_USD).toUpperCase();
+    return prefs.getString(Constants.SETTING_SELECTED_FIAT_CURRENCY, Constants.FIAT_GBP).toUpperCase();
   }
 
   /**

@@ -38,28 +38,17 @@
                 android:gravity="center_vertical">
                 <Button
                   android:textSize="@dimen/textSize"
-
+                  android:id="@+id/camera"
                   android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/new_regular_payment"
                     android:textColor="@color/grey_4"
-                    android:background="@drawable/rounded_corner_button"
-                    />
-                <ImageButton
+                  android:onClick="@{(v)->lightningPresenter.regularPayment()}"
 
-                    android:id="@+id/camera"
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight=".2"
-                    android:scaleType="fitXY"
-                    android:scaleX="1"
-                    android:scaleY="1"
-                    android:onClick="@{(v)->lightningPresenter.regularPayment()}"
-                    android:textColor="@color/yellow"
-                    android:background="@drawable/ic_camera_alt_black_24dp"
+                  android:background="@drawable/rounded_corner_button"
                     />
+
             </LinearLayout>
             <Button
               android:textSize="@dimen/textSize"

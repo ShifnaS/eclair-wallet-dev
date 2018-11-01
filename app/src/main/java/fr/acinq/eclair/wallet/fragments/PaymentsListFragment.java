@@ -16,17 +16,25 @@
 
 package fr.acinq.eclair.wallet.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,6 +48,7 @@ import java.util.List;
 import fr.acinq.eclair.CoinUnit;
 import fr.acinq.eclair.wallet.App;
 import fr.acinq.eclair.wallet.R;
+import fr.acinq.eclair.wallet.activities.HomeActivity;
 import fr.acinq.eclair.wallet.adapters.PaymentListItemAdapter;
 import fr.acinq.eclair.wallet.events.BalanceUpdateEvent;
 import fr.acinq.eclair.wallet.models.Payment;
@@ -48,13 +57,14 @@ import fr.acinq.eclair.wallet.models.PaymentStatus;
 import fr.acinq.eclair.wallet.models.PaymentType;
 import fr.acinq.eclair.wallet.utils.WalletUtils;
 
-public class PaymentsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class PaymentsListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,HomeActivity.CallRegularPaymentFragment {
   private final Logger log = LoggerFactory.getLogger(PaymentsListFragment.class);
   private View mView;
   private PaymentListItemAdapter mPaymentAdapter;
   private SwipeRefreshLayout mRefreshLayout;
   private TextView mEmptyLabel;
-
+  //public HomeActivity.CallRegularPaymentFragment callRegularPaymentFragment;
+  Context context;
   @Override
   public void onRefresh() {
     updateList();
@@ -74,11 +84,41 @@ public class PaymentsListFragment extends Fragment implements SwipeRefreshLayout
     super.onResume();
     updateList();
   }
-
+  @Override
+  public void onAttach(Activity activity){
+    super.onAttach(activity);
+     context = getActivity();
+    ((HomeActivity)context).callRegularPaymentFragment = this;
+  }
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     mView = inflater.inflate(R.layout.fragment_paymentslist, container, false);
+
+
+    mView.setFocusableInTouchMode(true);
+    mView.requestFocus();
+    mView.setOnKeyListener(new View.OnKeyListener() {
+      @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        Log.i("yfgf", "keyCode: " + keyCode);
+        if( keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+          Log.i("dffdfffd", "onKey Back listener is working!!!");
+          getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+          Fragment fragment=new PaymentsListFragment();
+          FragmentManager fragmentManager = getFragmentManager();
+          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+          fragmentTransaction.replace(R.id.frame, fragment);
+          fragmentTransaction.addToBackStack(null);
+          fragmentTransaction.commit();
+          return true;
+        }
+        return false;
+      }
+    });
+
+
     mRefreshLayout = mView.findViewById(R.id.payments_swiperefresh);
     mRefreshLayout.setColorSchemeResources(R.color.primary, R.color.green, R.color.accent);
     mRefreshLayout.setOnRefreshListener(this);
@@ -128,6 +168,7 @@ public class PaymentsListFragment extends Fragment implements SwipeRefreshLayout
   }
 
   public void updateList() {
+
     if (getActivity() != null && getContext() != null) {
       final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
       final CoinUnit prefUnit = WalletUtils.getPreferredCoinUnit(prefs);
@@ -142,5 +183,19 @@ public class PaymentsListFragment extends Fragment implements SwipeRefreshLayout
       }.start();
     }
   }
+
+
+  @Override
+  public void make_regular() {
+
+    Fragment fragment=new NewRegularPaymentFragment();
+    FragmentManager fragmentManager = this.getFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    fragmentTransaction.replace(R.id.frame, fragment);
+    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.commit();
+
+  }
+
 }
 

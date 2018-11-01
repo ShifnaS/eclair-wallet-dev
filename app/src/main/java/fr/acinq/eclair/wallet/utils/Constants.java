@@ -17,6 +17,7 @@
 package fr.acinq.eclair.wallet.utils;
 
 import fr.acinq.eclair.wallet.BuildConfig;
+import fr.acinq.eclair.wallet.api.ApiUrl;
 import fr.acinq.eclair.wallet.models.FeeRating;
 
 public interface Constants {
@@ -50,6 +51,7 @@ public interface Constants {
   // currencies
   String SETTING_SELECTED_FIAT_CURRENCY = "fiat_currency";
   String FIAT_USD = "usd";
+  String FIAT_GBP = "gbp";
   String SETTING_BTC_UNIT = "btc_unit";
   String SETTING_BTC_PATTERN = "btc_pattern";
   String SETTING_DISPLAY_IN_FIAT = "display_in_fiat";
@@ -126,5 +128,12 @@ public interface Constants {
 
   String WAKE_UP = "wake_up";
   String REFRESH = "refresh";
+
+  String URL_InvoiceID=ApiUrl.BASE_URL + "/invoice/makepayment";
+  String URL_SCAN=ApiUrl.BASE_URL + "/schedule/getschedulesdetails/";
+
+
+
+
 
 }

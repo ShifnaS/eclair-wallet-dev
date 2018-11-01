@@ -23,7 +23,7 @@
 
             >
             <TableRow
-                android:background="@color/blue_light_x1"
+                android:background="@color/primary_light_x1"
                 android:padding="8dp">
 
                 <TextView
@@ -53,14 +53,14 @@
                     android:layout_weight="1"
                     android:text="Nougat"
                   android:textSize="@dimen/textSize"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="24"
                   android:textSize="@dimen/textSize"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
             </TableRow>
             <TableRow
                 android:padding="8dp">
@@ -71,14 +71,14 @@
                     android:layout_weight="1"
                     android:text="Marshmallow"
                   android:textSize="@dimen/textSize"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="23"
                   android:textSize="@dimen/textSize"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
             </TableRow>
             <TableRow
                 android:padding="8dp">
@@ -89,14 +89,14 @@
                     android:layout_weight="1"
                     android:text="Android Lollipop"
                   android:textSize="@dimen/textSize"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                   android:textSize="@dimen/textSize"
                     android:text="21"
-                    android:textColor="@color/blue_light_x1" />
+                    android:textColor="@color/grey_4" />
             </TableRow>
         </TableLayout>
         <Button
@@ -105,7 +105,7 @@
             android:layout_height="40dp"
             android:layout_margin="10dp"
             android:textSize="@dimen/textSize"
-            android:background="@drawable/rounded_corner_blue"
+            android:background="@drawable/rounded_corner_green"
             android:onClick="@{(v)->invoiceSchedulePresenter.cancel()}"
             android:text="Cancel Regular Payment"
             android:textColor="@color/white" />

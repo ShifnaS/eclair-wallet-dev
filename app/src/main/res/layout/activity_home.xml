@@ -216,7 +216,10 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+      >
+      </android.support.v4.view.ViewPager>
+
     </LinearLayout>
 
     <!-- toggleable floating buttons -->
@@ -234,7 +237,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+       >
 
         <fr.acinq.eclair.wallet.customviews.FabText
           android:id="@+id/sendpayment_paste"
@@ -251,6 +255,13 @@
           android:onClick="scanSendPaymentRequest"
           app:icon="@mipmap/ic_scan"
           app:label="Scan a payment request" />
+        <fr.acinq.eclair.wallet.customviews.FabText
+          android:id="@+id/make_new_regular_payment"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="makeNewRegularPayment"
+          app:icon="@mipmap/ic_open_new"
+          app:label="Make New Regular Payment" />
 
       </LinearLayout>
 
@@ -326,6 +337,7 @@
       </LinearLayout>
 
       <android.support.design.widget.FloatingActionButton
+
         android:id="@+id/home_openchannel_toggler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -26,9 +26,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -41,6 +43,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -91,7 +94,9 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
 
   public static final String EXTRA_PAGE = BuildConfig.APPLICATION_ID + "EXTRA_PAGE";
   public static final String EXTRA_PAYMENT_URI = BuildConfig.APPLICATION_ID + "EXTRA_PAYMENT_URI";
-
+  String tagManage="Manage";
+  String tagLightning="Lightning";
+  public CallRegularPaymentFragment callRegularPaymentFragment;
   private ActivityHomeBinding mBinding;
 
   private ViewStub mStubIntro;
@@ -108,7 +113,6 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
   private final Animation mBlinkingAnimation = new AlphaAnimation(0.3f, 1);
   private final Animation mRotatingAnimation = new RotateAnimation(0, -360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
     0.5f);
-
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -209,12 +213,14 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
 
   private void setUpBalanceInteraction(final SharedPreferences prefs) {
     mBinding.balance.setOnClickListener(view -> {
+   //   Toast.makeText(app, "hiii", Toast.LENGTH_SHORT).show();
       boolean displayBalanceAsFiat = WalletUtils.shouldDisplayInFiat(prefs);
       prefs.edit().putBoolean(Constants.SETTING_DISPLAY_IN_FIAT, !displayBalanceAsFiat).commit();
       mBinding.balanceOnchain.refreshUnits();
       mBinding.balanceLightning.refreshUnits();
       mBinding.balanceTotal.refreshUnits();
-      mPaymentsListFragment.refreshList();
+//      mPaymentsListFragment.refreshList();
+     // mLightningFragment.refreshList();
       mChannelsListFragment.updateActiveChannelsList();
     });
   }
@@ -404,11 +410,25 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
       startActivity(intent);
     }
   }
+  public void makeNewRegularPayment(View view) {
 
+    LinearLayout layout=findViewById(R.id.make);
+    LinearLayout ll=findViewById(R.id.sendpayment_actions_list);
+    ll.setVisibility(View.GONE);
+    layout.setVisibility(View.GONE);
+
+    boolean isVisible = mBinding.sendpaymentActionsList.getVisibility() == View.GONE;
+    mBinding.sendpaymentToggler.animate().rotation(isVisible ? 0 : -90).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(150).start();
+    mBinding.sendpaymentToggler.setBackgroundTintList(ContextCompat.getColorStateList(this, isVisible ?  R.color.primary:R.color.grey_4 ));
+    mBinding.sendpaymentActionsList.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+    callRegularPaymentFragment.make_regular();
+   /* */
+  }
   public void scanSendPaymentRequest(View view) {
     if (canSendPayments) {
       Intent intent = new Intent(this, ScanActivity.class);
       intent.putExtra(ScanActivity.EXTRA_SCAN_TYPE, ScanActivity.TYPE_INVOICE);
+
       startActivity(intent);
     }
   }
@@ -588,6 +608,8 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
     mBinding.homeConnectionStatus.setVisibility(View.VISIBLE);
   }
 
+
+
   private class HomePagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> mFragmentList;
     private final String[] titles = new String[]{getString(R.string.receive_title), getString(R.string.payments_title), getString(R.string.localchannels_title),getString(R.string.lightning_collect),getString(R.string.Notification)};
@@ -613,5 +635,9 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
     }
   }
 
+  public interface  CallRegularPaymentFragment
+  {
+    void make_regular();
+  }
 
 }

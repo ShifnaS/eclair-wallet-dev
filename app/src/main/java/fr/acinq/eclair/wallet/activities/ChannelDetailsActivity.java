@@ -94,6 +94,7 @@ public class ChannelDetailsActivity extends EclairActivity {
     ab.setDisplayHomeAsUpEnabled(true);
     Intent intent = getIntent();
     mChannelId = intent.getStringExtra(LocalChannelItemHolder.EXTRA_CHANNEL_ID);
+   // Toast.makeText(app, ""+mChannelId, Toast.LENGTH_SHORT).show();
   }
 
   @Override

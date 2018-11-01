@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,30 @@ import android.widget.ArrayAdapter;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.acinq.eclair.wallet.R;
+import fr.acinq.eclair.wallet.api.SingletonRequestQueue;
 import fr.acinq.eclair.wallet.databinding.FragmentSummaryPurchaseBinding;
+import fr.acinq.eclair.wallet.models.LocalChannel;
 import fr.acinq.eclair.wallet.models.ScheduleDataList;
 import fr.acinq.eclair.wallet.presenter.SummaryPurchasePresenter;
+import fr.acinq.eclair.wallet.utils.Constants;
 import fr.acinq.eclair.wallet.viewmodel.SummaryPurchaseViewModel;
 import scala.Int;
 
@@ -35,7 +52,6 @@ public class SummaryPurchaseFragment extends Fragment {
     String f="";
     String s="";
     private SummaryPurchaseViewModel summaryPurchaseViewModel,summaryPurchaseViewModel1,summaryPurchaseViewModel2;
-
     public SummaryPurchaseFragment() {
         // Required empty public constructor
     }
@@ -59,7 +75,11 @@ public class SummaryPurchaseFragment extends Fragment {
         String payment_day=bundle.getString("payment_date");
         String qr_code=bundle.getString("qr_code");
         String schedule_type=bundle.getString("schedule_type");
+        String schedule_id=bundle.getString("schedule_id");
         String payment_month=bundle.getString("payment_month");
+        String note=bundle.getString("note");
+
+
         String days="";
 
         day = new String[28];
@@ -89,16 +109,16 @@ public class SummaryPurchaseFragment extends Fragment {
           {
             //monthly
             s="Summary of Purchase \n\n" +
-              "Cost = "+amount +"\n Frequency = monthly \n\n ";
-              dayy="Payment Date = 1 of every month";
+              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = monthly \n\n ";
+              dayy="1 of every month";
           }
           else
           {
             //annually
             String month=getMonth(1);
             s="Summary of Purchase \n\n" +
-              "Cost = "+amount +"\n Frequency = annually \n\n ";
-            dayy="Payment Date = 1 of the "+month;
+              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = annually \n\n ";
+            dayy="1 of the "+month;
 
           }
         }
@@ -113,14 +133,14 @@ public class SummaryPurchaseFragment extends Fragment {
               //service A
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
                 "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-              dayy="Payment Date = "+payment_day+" of the every month";
+              dayy=payment_day+" of the every month";
             }
             else
             {
               // other services
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
                 "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-              dayy="Payment Date = "+payment_day+" of the every month";
+              dayy=payment_day+" of the every month";
             }
 
           }
@@ -131,13 +151,13 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
                 "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-              dayy="Payment Date = "+payment_day+" of the "+payment_month;
+              dayy=payment_day+" of the "+payment_month;
             }
             else
             {
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
                 "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-              dayy="Payment Date = "+payment_day+" of the "+payment_month;
+              dayy=payment_day+" of the "+payment_month;
             }
 
           }
@@ -160,14 +180,116 @@ public class SummaryPurchaseFragment extends Fragment {
       binding.setSummaryPurchasePresenter(new SummaryPurchasePresenter() {
             @Override
             public void confirm() {
-               // Toast.makeText(getContext(), "hii", Toast.LENGTH_SHORT).show();
-              // String response=re
-                Fragment fragment = new ConfirmationFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.content_summary, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
+              if(schedule_type.equals("1"))
+              {
+                Map<String, String> postParam= new HashMap<>();
+                String month_day=binding.tvDate.getText().toString().trim();
+                String md[]=month_day.split(" ");
+                postParam.put("paymentDay", md[0]);
+                postParam.put("paymentAmount", amount);
+                postParam.put("frequency", frequency);
+                postParam.put("schedule_id", schedule_id);
+                postParam.put("schedule_type", schedule_type);
+                postParam.put("qr_code", qr_code);
+
+                if(frequency.equals("2"))
+                {
+                  postParam.put("payment_month", md[3]);
+                }
+                try
+                {
+
+
+                 // JSONObject jsonObject=summaryPurchaseViewModel.GetInvoiceID(postParam);
+
+             /*     LocalChannel channel = null;
+                  String channel_id=channel.getChannelId();
+                  Toast.makeText(getContext(), "cahnnelid "+channel_id, Toast.LENGTH_SHORT).show();*/
+
+                  VolleyLog.DEBUG = true;
+                  RequestQueue queue = SingletonRequestQueue.getInstance(getContext()).getRequestQueue();
+
+
+
+                  JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+                    Constants.URL_InvoiceID, new JSONObject(postParam),
+                    new Response.Listener<JSONObject>() {
+
+                      @Override
+                      public void onResponse(JSONObject jsonObject) {
+                        Log.e("RESPONSE", jsonObject.toString());
+
+                        try {
+                          Boolean error;
+                          String invoice_id="";
+
+                          if(!jsonObject.getBoolean("error"))
+                          {
+                            if(jsonObject.getString("message").equals("success"))
+                            {
+                              invoice_id=jsonObject.getString("response");
+                            }
+                            else
+                            {
+                              Toast.makeText(getContext(), ""+jsonObject.getString("response"), Toast.LENGTH_SHORT).show();
+
+                            }
+                          }
+                          else
+                          {
+                            Toast.makeText(getContext(), ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
+                          }
+
+                          Fragment fragment = new ConfirmationFragment();
+
+                          Bundle bundle = new Bundle();
+                          bundle.putString("invoice_id", "lightning:"+invoice_id);
+                          bundle.putString("amount", amount);
+                          fragment.setArguments(bundle);
+                          FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                          fragmentTransaction.replace(R.id.content_summary, fragment);
+                          fragmentTransaction.addToBackStack(null);
+                          fragmentTransaction.commit();
+                        }
+                        catch (JSONException e) {
+                          e.printStackTrace();
+                        }
+
+
+                        //jo =jsonObject;
+                      }
+                    }, error -> VolleyLog.d("VOLLEY EROOR", "Error: " + error.getMessage())) {
+
+                    /**
+                     * Passing some request headers
+                     * */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                      HashMap<String, String> headers = new HashMap<String, String>();
+                      headers.put("Content-Type", "application/json; charset=utf-8");
+                      return headers;
+                    }
+
+
+
+                  };
+
+                  queue.add(jsonObjReq);
+
+                }
+                catch (Exception e)
+                {
+                  Log.e("ERRROR","====== "+e.getMessage());
+                }
+
+
+              }
+              else
+              {
+
+              }
 
             }
 
@@ -186,8 +308,8 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               //monthly
               s="Summary of Purchase \n\n" +
-                "Cost = "+amount +"\n Frequency = monthly \n\n ";
-              dayy="Payment Date = "+day[newval]+" of every month";
+              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = monthly \n\n ";
+              dayy=day[newval]+" of every month";
             }
             else
             {
@@ -196,8 +318,8 @@ public class SummaryPurchaseFragment extends Fragment {
               int mm=Integer.parseInt(m);
               String month=getMonth(mm);
               s="Summary of Purchase \n\n" +
-                "Cost = "+amount +"\n Frequency = annually \n\n ";
-              dayy="Payment Date = "+day[newval]+" of the "+month;
+              "Payment Name= "+note+" \n\n  Cost = "+amount +"\n Frequency = annually \n\n ";
+              dayy=day[newval]+" of the "+month;
 
             }
           }
@@ -212,14 +334,14 @@ public class SummaryPurchaseFragment extends Fragment {
                 //service A
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
                   "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-                dayy="Payment Date = "+payment_day+" of the every month";
+                dayy=payment_day+" of the every month";
               }
               else
               {
                 // other services
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
                   "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-                dayy="Payment Date = "+payment_day+" of the every month";
+                dayy=payment_day+" of the every month";
               }
 
             }
@@ -230,13 +352,13 @@ public class SummaryPurchaseFragment extends Fragment {
               {
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
                   "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+                dayy=payment_day+" of the "+payment_month;
               }
               else
               {
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
                   "Cost = "+amount +"\n Frequency = monthly\n\n" ;
-                dayy="Payment Date = "+payment_day+" of the "+payment_month;
+                dayy=payment_day+" of the "+payment_month;
               }
 
             }

@@ -24,6 +24,7 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.acinq.bitcoin.MilliSatoshi;
 import fr.acinq.eclair.CoinUnit;
@@ -66,6 +67,7 @@ public class LocalChannelItemHolder extends RecyclerView.ViewHolder implements V
 
   @Override
   public void onClick(View v) {
+   // Toast.makeText(, "", Toast.LENGTH_SHORT).show();
     Intent intent = new Intent(v.getContext(), ChannelDetailsActivity.class);
     intent.putExtra(EXTRA_CHANNEL_ID, this.channel.getChannelId());
     v.getContext().startActivity(intent);

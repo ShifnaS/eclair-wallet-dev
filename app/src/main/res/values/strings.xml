@@ -24,13 +24,13 @@
   <string name="manage_regular_payment">Manage Regular Payment</string>
   <string name="abcdxyz123">ABCDXYZ123</string>
   <string name="confirm">Confirm</string>
-  <string name="makeinitialpayment">Confirm and make initial payment</string>
+  <string name="makeinitialpayment">Confirm and Approve Payments</string>
   <string name="cancel">Cancel</string>
   <string name="confirmPayment">Confirm payment</string>
   <string name="ok">ok</string>
   <string name="view">view</string>
   <string name="active">Active</string>
-  <string name="invoice_schedule">Invoice Schedule</string>
+  <string name="invoice_schedule">Payment Name</string>
   <string name="payment">Payment</string>
   <string name="make_payment">Make Payment</string>
 
@@ -613,6 +613,6 @@
   <string name="lightning_collect">Lightning Collect</string>
   <string name="Notification">Notification</string>
   <string name="scan_bar_code">scan an invoice here</string>
-  <string name="select_day">Select day</string>
+  <string name="select_day">Select Preferred Date</string>
 
 </resources>
