@@ -130,7 +130,11 @@ public interface Constants {
   String REFRESH = "refresh";
 
   String URL_InvoiceID=ApiUrl.BASE_URL + "/invoice/makepayment";
-  String URL_SCAN=ApiUrl.BASE_URL + "/schedule/getschedulesdetails/";
+  //String URL_SCAN=ApiUrl.BASE_URL + "/schedule/getschedulesdetails/";
+  String URL_SCAN=ApiUrl.BASE_URL + "/invoice/dynamicscheduledetails/";
+  String URL_OK=ApiUrl.BASE_URL + "/invoice/paymentupdates/";
+
+ // http://51.158.68.20:4000/invoice/dynamicscheduledetails/lntb30n1pdahmpwpp5302euwed297nplvzgvp5wwzqkwesyqmxsqs8lqxey7zds0zp6ljqdpj0v38qcted4jkuazyv9ujyw3zxy3zcgnpd4hh2mn5ygazyvez05cqzyspxv0xkgstr8dsm0x8cgrh7c65a5q8kac6vx5t2m4vdmvl5uujt9hus0ux7959zzd4hz9kpae7kameq02m24xz7urxraylrx0f56kmysq2ufrut
 
 
 

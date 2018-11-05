@@ -51,6 +51,7 @@ public class SummaryPurchaseFragment extends Fragment {
     ScheduleDataList dataList;
     String f="";
     String s="";
+    String mm="";
     private SummaryPurchaseViewModel summaryPurchaseViewModel,summaryPurchaseViewModel1,summaryPurchaseViewModel2;
     public SummaryPurchaseFragment() {
         // Required empty public constructor
@@ -78,9 +79,12 @@ public class SummaryPurchaseFragment extends Fragment {
         String schedule_id=bundle.getString("schedule_id");
         String payment_month=bundle.getString("payment_month");
         String note=bundle.getString("note");
+       // String invoice_id=bundle.getString("invoice_id");
 
-
-        String days="";
+        double amt=Double.parseDouble(amount);
+        //double amt_btc=amt/100000000;
+        String amt_btc=amount;
+      String days="";
 
         day = new String[28];
         for(int i=0;i<28;i++)
@@ -109,16 +113,18 @@ public class SummaryPurchaseFragment extends Fragment {
           {
             //monthly
             s="Summary of Purchase \n\n" +
-              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = monthly \n\n ";
+              "Payment Name= "+note+" \n\n Cost = "+amt_btc +"\n Frequency = monthly \n\n ";
               dayy="1 of every month";
+              mm="";
           }
           else
           {
             //annually
             String month=getMonth(1);
             s="Summary of Purchase \n\n" +
-              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = annually \n\n ";
+              "Payment Name= "+note+" \n\n Cost = "+amt_btc +"\n Frequency = annually \n\n ";
             dayy="1 of the "+month;
+            mm=month;
 
           }
         }
@@ -132,16 +138,20 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               //service A
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
-                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
               dayy=payment_day+" of the every month";
+
             }
             else
             {
               // other services
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
-                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
               dayy=payment_day+" of the every month";
+
             }
+            mm="";
+
 
           }
           else
@@ -150,14 +160,18 @@ public class SummaryPurchaseFragment extends Fragment {
             if(service_name.equalsIgnoreCase("A"))
             {
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
-                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
               dayy=payment_day+" of the "+payment_month;
+              mm=payment_month;
+
             }
             else
             {
               s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
-                "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
               dayy=payment_day+" of the "+payment_month;
+              mm=payment_month;
+
             }
 
           }
@@ -181,8 +195,8 @@ public class SummaryPurchaseFragment extends Fragment {
             @Override
             public void confirm() {
 
-              if(schedule_type.equals("1"))
-              {
+           /*   if(schedule_type.equals("1"))
+              {*/
                 Map<String, String> postParam= new HashMap<>();
                 String month_day=binding.tvDate.getText().toString().trim();
                 String md[]=month_day.split(" ");
@@ -206,6 +220,7 @@ public class SummaryPurchaseFragment extends Fragment {
              /*     LocalChannel channel = null;
                   String channel_id=channel.getChannelId();
                   Toast.makeText(getContext(), "cahnnelid "+channel_id, Toast.LENGTH_SHORT).show();*/
+                 // Toast.makeText(getContext(), "hiii", Toast.LENGTH_SHORT).show();
 
                   VolleyLog.DEBUG = true;
                   RequestQueue queue = SingletonRequestQueue.getInstance(getContext()).getRequestQueue();
@@ -219,7 +234,7 @@ public class SummaryPurchaseFragment extends Fragment {
                       @Override
                       public void onResponse(JSONObject jsonObject) {
                         Log.e("RESPONSE", jsonObject.toString());
-
+                        Toast.makeText(getContext(), "Response "+jsonObject.toString(), Toast.LENGTH_SHORT).show();
                         try {
                           Boolean error;
                           String invoice_id="";
@@ -229,10 +244,24 @@ public class SummaryPurchaseFragment extends Fragment {
                             if(jsonObject.getString("message").equals("success"))
                             {
                               invoice_id=jsonObject.getString("response");
+                              Fragment fragment = new ConfirmationFragment();
+
+                              Bundle bundle = new Bundle();
+                              bundle.putString("invoice_id", invoice_id);
+                              bundle.putString("amount", ""+amt_btc);
+                              bundle.putString("month", ""+mm);
+                              bundle.putString("day", ""+md[0]);
+
+                              fragment.setArguments(bundle);
+                              FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                              fragmentTransaction.replace(R.id.content_summary, fragment);
+                              fragmentTransaction.addToBackStack(null);
+                              fragmentTransaction.commit();
                             }
                             else
                             {
-                              Toast.makeText(getContext(), ""+jsonObject.getString("response"), Toast.LENGTH_SHORT).show();
+                              Toast.makeText(getContext(), ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
 
                             }
                           }
@@ -241,17 +270,7 @@ public class SummaryPurchaseFragment extends Fragment {
                             Toast.makeText(getContext(), ""+jsonObject.getString("message"), Toast.LENGTH_SHORT).show();
                           }
 
-                          Fragment fragment = new ConfirmationFragment();
 
-                          Bundle bundle = new Bundle();
-                          bundle.putString("invoice_id", "lightning:"+invoice_id);
-                          bundle.putString("amount", amount);
-                          fragment.setArguments(bundle);
-                          FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                          FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                          fragmentTransaction.replace(R.id.content_summary, fragment);
-                          fragmentTransaction.addToBackStack(null);
-                          fragmentTransaction.commit();
                         }
                         catch (JSONException e) {
                           e.printStackTrace();
@@ -282,14 +301,16 @@ public class SummaryPurchaseFragment extends Fragment {
                 catch (Exception e)
                 {
                   Log.e("ERRROR","====== "+e.getMessage());
+
+
                 }
 
 
-              }
+             /* }
               else
               {
 
-              }
+              }*/
 
             }
 
@@ -308,18 +329,20 @@ public class SummaryPurchaseFragment extends Fragment {
             {
               //monthly
               s="Summary of Purchase \n\n" +
-              "Payment Name= "+note+" \n\n Cost = "+amount +"\n Frequency = monthly \n\n ";
+              "Payment Name= "+note+" \n\n Cost = "+amt_btc +"\n Frequency = monthly \n\n ";
               dayy=day[newval]+" of every month";
+              mm="";
             }
             else
             {
               //annually
               String m=day[newval];
-              int mm=Integer.parseInt(m);
-              String month=getMonth(mm);
+              int mmm=Integer.parseInt(m);
+              String month=getMonth(mmm);
               s="Summary of Purchase \n\n" +
-              "Payment Name= "+note+" \n\n  Cost = "+amount +"\n Frequency = annually \n\n ";
+              "Payment Name= "+note+" \n\n  Cost = "+amt_btc +"\n Frequency = annually \n\n ";
               dayy=day[newval]+" of the "+month;
+              mm=month;
 
             }
           }
@@ -333,15 +356,17 @@ public class SummaryPurchaseFragment extends Fragment {
               {
                 //service A
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
-                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                  "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
                 dayy=payment_day+" of the every month";
+                mm="";
               }
               else
               {
                 // other services
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
-                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                  "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
                 dayy=payment_day+" of the every month";
+                mm="";
               }
 
             }
@@ -351,14 +376,16 @@ public class SummaryPurchaseFragment extends Fragment {
               if(service_name.equalsIgnoreCase("A"))
               {
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n Immediate Payment Cost = "+immediate_cost+" \n\n\n\n" +
-                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                  "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
                 dayy=payment_day+" of the "+payment_month;
+                mm=payment_month;
               }
               else
               {
                 s="Summary of Purchase \n\n Name – Service "+service_name+" \n\n\n\n" +
-                  "Cost = "+amount +"\n Frequency = monthly\n\n" ;
+                  "Cost = "+amt_btc +"\n Frequency = monthly\n\n" ;
                 dayy=payment_day+" of the "+payment_month;
+                mm=payment_month;
               }
 
             }

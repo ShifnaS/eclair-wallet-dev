@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import fr.acinq.eclair.wallet.R;
 import fr.acinq.eclair.wallet.activities.HomeActivity;
@@ -32,13 +33,21 @@ public class PAymentSuccessfullFragment extends Fragment {
     // Inflate the layout for this fragment
 
     FragmentPaymentSuccessfullBinding binding= DataBindingUtil.inflate(inflater,R.layout.fragment_payment_successfull,container,false);
+
     View root=binding.getRoot();
+    Bundle bundle = getArguments();
+
+    String day=bundle.getString("day");
+    String month=bundle.getString("month");
+    TextView textView=root.findViewById(R.id.success);
+    textView.setText("payment successfull  \n \n \n \n Your next Payment will be on "+month+" "+day);
     binding.setPaymentSuccesfullPresenter(new PaymentSuccesfullPresenter() {
       @Override
       public void ok() {
-        Intent i=new Intent(getContext(), HomeActivity.class);
-        startActivity(i);
-        // getActivity().finish();
+
+        Intent intent=new Intent(getContext(),HomeActivity.class);
+        startActivity(intent);
+        getActivity().finish();
 
       }
     });

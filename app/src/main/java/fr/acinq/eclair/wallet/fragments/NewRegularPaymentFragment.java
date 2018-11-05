@@ -136,117 +136,126 @@ public class NewRegularPaymentFragment extends Fragment {
                   JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                     jo -> {
                       Log.e("Response", "*******************"+jo.toString());
-                     // jo=res;
-                      try
+                     // jo=res;if(
+                      if(jo!=null)
                       {
-                        String schedule_id = "",_id, note="",schedule_type = "", service_name = "", immediate_cost = "", payment_month = "", payment_date = "", qr_code = "", amount = "", frequency = "";
+                        try
+                        {
+                          String schedule_id = "",_id, note="",schedule_type = "", service_name = "", immediate_cost = "", payment_month = "", payment_date = "", qr_code = "", amount = "", frequency = "";
 
-                        String response = jo.getString("message");
-                        boolean error = jo.getBoolean("error");
-                        if (!error) {
-                          if (response.equalsIgnoreCase("success")) {
+                          String response = jo.getString("message");
+                          boolean error = jo.getBoolean("error");
+                          if (!error) {
+                            if (response.equalsIgnoreCase("success")) {
 
-                            JSONArray jsonArray = jo.getJSONArray("response");
-                            Log.e("JSON ARRAY","========= "+jsonArray.toString());
-                            //now looping through all the elements of the json array
-                            for (int i = 0; i < jsonArray.length(); i++) {
+                              JSONArray jsonArray = jo.getJSONArray("response");
+                              Log.e("JSON ARRAY","========= "+jsonArray.toString());
+                              //now looping through all the elements of the json array
+                              for (int i = 0; i < jsonArray.length(); i++) {
 
-                              Fragment fragment = new SummaryPurchaseFragment();
-                              JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-
-
-                              if (jsonObject.has("_id")) {
-                                _id = jsonObject.getString("_id");
-                              } else {
-                                _id = "";
-                              }
-                              if (jsonObject.has("service_name")) {
-                                service_name = jsonObject.getString("service_name");
-                              } else {
-                                service_name = "";
-                              }
-                              if (jsonObject.has("immediate_cost")) {
-                                immediate_cost = jsonObject.getString("immediate_cost");
-                              } else {
-                                immediate_cost = "";
-                              }
-                              if (jsonObject.has("payment_month")) {
-                                payment_month = jsonObject.getString("payment_month");
-                              } else {
-                                payment_month = "";
-                              }
-                              if (jsonObject.has("payment_day")) {
-                                payment_date = jsonObject.getString("payment_day");
-                              } else {
-                                payment_date = "";
-                              }
-                              if (jsonObject.has("qr_code")) {
-                                qr_code = jsonObject.getString("qr_code");
-                              } else {
-                                qr_code = "";
-                              }
-                              if (jsonObject.has("amount")) {
-                                amount = jsonObject.getString("amount");
-                              } else {
-                                amount = "";
-                              }
-                              if (jsonObject.has("frequency")) {
-                                frequency = jsonObject.getString("frequency");
-                              } else {
-                                frequency = "";
-                              }
-                              if (jsonObject.has("schedule_type")) {
-                                schedule_type = jsonObject.getString("schedule_type");
-                              } else {
-                                frequency = "";
-                              }
-                              if (jsonObject.has("schedule_id")) {
-                                schedule_id = jsonObject.getString("schedule_id");
-                              } else {
-                                schedule_id = "";
-                              }
-                              if (jsonObject.has("note")) {
-                                note = jsonObject.getString("note");
-                              } else {
-                                note = "";
-                              }
+                                Fragment fragment = new SummaryPurchaseFragment();
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 
-                              Bundle bundle = new Bundle();
-                              bundle.putString("_id", _id);
-                              bundle.putString("service_name", service_name);
-                              bundle.putString("immediate_cost", immediate_cost);
-                              bundle.putString("amount", amount);
-                              bundle.putString("frequency", frequency);
-                              bundle.putString("payment_date", payment_date);
-                              bundle.putString("qr_code", qr_code);
-                              bundle.putString("schedule_type", schedule_type);
-                              bundle.putString("schedule_id", schedule_id);
-                              bundle.putString("payment_month", payment_month);
-                              bundle.putString("note", note);
 
-                              fragment.setArguments(bundle);
+                                if (jsonObject.has("_id")) {
+                                  _id = jsonObject.getString("_id");
+                                } else {
+                                  _id = "";
+                                }
+                                if (jsonObject.has("service_name")) {
+                                  service_name = jsonObject.getString("service_name");
+                                } else {
+                                  service_name = "";
+                                }
+                                if (jsonObject.has("immediate_cost")) {
+                                  immediate_cost = jsonObject.getString("immediate_cost");
+                                } else {
+                                  immediate_cost = "";
+                                }
+                                if (jsonObject.has("payment_month")) {
+                                  payment_month = jsonObject.getString("payment_month");
+                                } else {
+                                  payment_month = "";
+                                }
+                                if (jsonObject.has("payment_day")) {
+                                  payment_date = jsonObject.getString("payment_day");
+                                } else {
+                                  payment_date = "";
+                                }
+                                if (jsonObject.has("qr_code")) {
+                                  qr_code = jsonObject.getString("qr_code");
+                                } else {
+                                  qr_code = "";
+                                }
+                                if (jsonObject.has("amount")) {
+                                  amount = jsonObject.getString("amount");
+                                } else {
+                                  amount = "";
+                                }
+                                if (jsonObject.has("frequency")) {
+                                  frequency = jsonObject.getString("frequency");
+                                } else {
+                                  frequency = "";
+                                }
+                                if (jsonObject.has("schedule_type")) {
+                                  schedule_type = jsonObject.getString("schedule_type");
+                                } else {
+                                  frequency = "";
+                                }
+                                if (jsonObject.has("schedule_id")) {
+                                  schedule_id = jsonObject.getString("schedule_id");
+                                } else {
+                                  schedule_id = "";
+                                }
+                                if (jsonObject.has("note")) {
+                                  note = jsonObject.getString("note");
+                                } else {
+                                  note = "";
+                                }
 
-                              FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                              FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                              fragmentTransaction.replace(R.id.content_regular, fragment);
-                              fragmentTransaction.addToBackStack(null);
-                              fragmentTransaction.commit();
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("_id", _id);
+                                bundle.putString("service_name", service_name);
+                                bundle.putString("immediate_cost", immediate_cost);
+                                bundle.putString("amount", amount);
+                                bundle.putString("frequency", frequency);
+                                bundle.putString("payment_date", payment_date);
+                                bundle.putString("qr_code", qr_code);
+                                bundle.putString("schedule_type", schedule_type);
+                                bundle.putString("schedule_id", schedule_id);
+                                bundle.putString("payment_month", payment_month);
+                                bundle.putString("note", note);
+                                //  bundle.putString("invoice_id", invoice_id);
+
+                                fragment.setArguments(bundle);
+
+                                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                fragmentTransaction.replace(R.id.content_regular, fragment);
+                                fragmentTransaction.addToBackStack(null);
+                                fragmentTransaction.commit();
+                              }
+
+
+                            } else {
+                              Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
                             }
-
-
                           } else {
                             Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
                           }
-                        } else {
-                          Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
 
+                        } catch (JSONException e) {
+                          e.printStackTrace();
                         }
-
-                      } catch (JSONException e) {
-                        e.printStackTrace();
                       }
+                      else
+                      {
+                        Toast.makeText(getContext(), "Inavlid qr code", Toast.LENGTH_SHORT).show();
+                      }
+
 
 
                     },
@@ -254,16 +263,11 @@ public class NewRegularPaymentFragment extends Fragment {
                   );
                   queue.add(getRequest);
 
-
-                //////////////////////////////////////////////////////////////////
-
-
-                 //Toast.makeText(getContext(), "message "+response, Toast.LENGTH_SHORT).show();
-
               }
 
 
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
               e.printStackTrace();
               Log.e("Error/////////", "//////////////////" + e.getMessage());
             }

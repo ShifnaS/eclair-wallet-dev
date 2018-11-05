@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -30,6 +31,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.bitcoinj.uri.BitcoinURI;
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.util.AsyncExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,7 @@ import fr.acinq.eclair.wallet.BuildConfig;
 import fr.acinq.eclair.wallet.actors.NodeSupervisor;
 import fr.acinq.eclair.wallet.R;
 import fr.acinq.eclair.wallet.databinding.ActivitySendPaymentBinding;
+import fr.acinq.eclair.wallet.events.Message;
 import fr.acinq.eclair.wallet.fragments.PinDialog;
 import fr.acinq.eclair.wallet.models.FeeRating;
 import fr.acinq.eclair.wallet.models.Payment;
@@ -70,6 +73,8 @@ public class SendPaymentActivity extends EclairActivity
   private final Logger log = LoggerFactory.getLogger(SendPaymentActivity.class);
 
   public static final String EXTRA_INVOICE = BuildConfig.APPLICATION_ID + ".EXTRA_INVOICE";
+  public static final String EXTRA_D = BuildConfig.APPLICATION_ID + ".EXTRA_D";
+  String msg="";
   private final static List<String> LIGHTNING_PREFIXES = Arrays.asList("lightning:", "lightning://");
   public final static int LOADING = 0;
   public final static int READ_ERROR = 1;
@@ -80,6 +85,8 @@ public class SendPaymentActivity extends EclairActivity
   private boolean isProcessingPayment = false;
   private Either<BitcoinURI, PaymentRequest> invoice;
   private String invoiceAsString = null;
+  private String goToFrag = null;
+
   private boolean isAmountReadonly = true;
 
   private ActivitySendPaymentBinding mBinding;
@@ -224,6 +231,8 @@ public class SendPaymentActivity extends EclairActivity
     } else if (pInvoice != null && pInvoice.isRight() && pInvoice.right().get() != null) {
       setupLightningPaymentForm(pInvoice.right().get());
     } else {
+     // EventBus.getDefault().postSticky(new Message(""));
+
       closeAndGoHome();
     }
   }
@@ -304,6 +313,8 @@ public class SendPaymentActivity extends EclairActivity
           pinDialog.show();
         } else {
           sendLNPayment(amountMsat, paymentRequest, invoiceAsString);
+       //   EventBus.getDefault().postSticky(new Message("success"));
+
           closeAndGoHome();
         }
       } else if (isOnchainInvoice()) {
@@ -312,6 +323,8 @@ public class SendPaymentActivity extends EclairActivity
           ? bitcoinURI.getAmount()
           : CoinUtils.convertStringAmountToSat(mBinding.amountEditableValue.getText().toString(), preferredBitcoinUnit.code());
         if (amountSat.$greater(app.getOnchainBalance())) {
+         // EventBus.getDefault().postSticky(new Message(""));
+          msg="Amount exceed your balance";
           handlePaymentError(R.string.payment_error_amount_onchain_insufficient_funds);
           return;
         }
@@ -323,8 +336,12 @@ public class SendPaymentActivity extends EclairActivity
               public void onPinConfirm(final PinDialog dialog, final String pinValue) {
                 if (isPinCorrect(pinValue, dialog)) {
                   sendBitcoinPayment(amountSat, feesPerKw, bitcoinURI, emptyWallet);
+                  //EventBus.getDefault().postSticky(new Message("success"));
+
                   closeAndGoHome();
                 } else {
+               //   EventBus.getDefault().postSticky(new Message("Incorrect pin"));
+                  msg="Incorrect pin";
                   handlePaymentError(R.string.payment_error_incorrect_pin);
                 }
               }
@@ -338,15 +355,26 @@ public class SendPaymentActivity extends EclairActivity
             pinDialog.show();
           } else {
             sendBitcoinPayment(amountSat, feesPerKw, bitcoinURI, emptyWallet);
+           // EventBus.getDefault().postSticky(new Message("success"));
+
             closeAndGoHome();
           }
         } catch (NumberFormatException e) {
+          msg="Failed";
+       //   EventBus.getDefault().postSticky(new Message("Failed"));
+
           handlePaymentError(R.string.payment_error_fees_onchain);
         }
       }
     } catch (NumberFormatException e) {
+      msg="Amount not valid";
+   //   EventBus.getDefault().postSticky(new Message("Amount not valid"));
+
       handlePaymentError(R.string.payment_error_amount);
     } catch (Exception e) {
+      msg=e.getMessage();
+     // EventBus.getDefault().postSticky(new Message(e.getMessage()));
+
       log.error("could not send payment with cause {}", e.getMessage());
       handlePaymentError(R.string.payment_error);
     }
@@ -396,7 +424,10 @@ public class SendPaymentActivity extends EclairActivity
             newPayment.setDescription(paymentDescription);
             newPayment.setUpdated(new Date());
             app.getDBHelper().insertOrUpdatePayment(newPayment);
+            msg="success";
           } else {
+            //EventBus.getDefault().postSticky(new Message("already exist"));
+            msg="already Exist";
             p.setAmountSentMsat(amountMsat);
             p.setUpdated(new Date());
             app.getDBHelper().insertOrUpdatePayment(p);
@@ -408,6 +439,7 @@ public class SendPaymentActivity extends EclairActivity
           app.sendLNPayment(pr, amountMsat, capLightningFees);
         }
       );
+
       closeAndGoHome();
     }
   }
@@ -430,14 +462,37 @@ public class SendPaymentActivity extends EclairActivity
   }
 
   public void cancelPayment(View view) {
+    msg="Payment Cancelled";
+   // EventBus.getDefault().postSticky(new Message());
+
     closeAndGoHome();
   }
 
   private void closeAndGoHome() {
-    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
-    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(intent);
-    finish();
+    if(goToFrag.equals(""))
+    {
+      Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(intent);
+      finish();
+    }
+    else
+    {
+      if(msg.equals(""))
+      {
+        msg="success";
+      }
+      Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+      intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      EventBus.getDefault().postSticky(new Message(msg));
+
+      // getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+     //EventBus.getDefault().postSticky(new Message("success"));
+
+
+    }
+
   }
 
   /**
@@ -568,6 +623,14 @@ public class SendPaymentActivity extends EclairActivity
     // --- read invoice from intent
     final Intent intent = getIntent();
     invoiceAsString = intent.getStringExtra(EXTRA_INVOICE).trim();
+    if(intent.hasExtra(EXTRA_D))
+    {
+      goToFrag=intent.getStringExtra(EXTRA_D).trim();
+    }
+    else
+    {
+      goToFrag="";
+    }
     log.info("initializing payment with invoice={}", invoiceAsString);
     if (invoiceAsString != null) {
       for (String prefix : LIGHTNING_PREFIXES) {
