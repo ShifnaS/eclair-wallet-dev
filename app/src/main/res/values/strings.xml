@@ -19,7 +19,6 @@
   <!--By shifna s-->
 
 
-
   <string name="new_regular_payment">New Regular payment</string>
   <string name="manage_regular_payment">Manage Regular Payment</string>
   <string name="abcdxyz123">ABCDXYZ123</string>
@@ -614,5 +613,6 @@
   <string name="Notification">Notification</string>
   <string name="scan_bar_code">scan an invoice here</string>
   <string name="select_day">Select Preferred Date</string>
+  <string name="notifications">Notifications</string>
 
 </resources>

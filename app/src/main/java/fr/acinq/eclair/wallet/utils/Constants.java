@@ -133,8 +133,16 @@ public interface Constants {
   //String URL_SCAN=ApiUrl.BASE_URL + "/schedule/getschedulesdetails/";
   String URL_SCAN=ApiUrl.BASE_URL + "/invoice/dynamicscheduledetails/";
   String URL_OK=ApiUrl.BASE_URL + "/invoice/paymentupdates/";
+  String URL_ManageRegular=ApiUrl.BASE_URL+"/invoice/getinvoicestatus/";
+  String URL="http://192.168.0.3:3000/invoice/getinvoicestatus/517731778d996820";
 
- // http://51.158.68.20:4000/invoice/dynamicscheduledetails/lntb30n1pdahmpwpp5302euwed297nplvzgvp5wwzqkwesyqmxsqs8lqxey7zds0zp6ljqdpj0v38qcted4jkuazyv9ujyw3zxy3zcgnpd4hh2mn5ygazyvez05cqzyspxv0xkgstr8dsm0x8cgrh7c65a5q8kac6vx5t2m4vdmvl5uujt9hus0ux7959zzd4hz9kpae7kameq02m24xz7urxraylrx0f56kmysq2ufrut
+  String URL_test1="http://192.168.0.3:3000/invoice/getschedulestsdetails/G2M2O7NB1UP";
+  String URL_test2="http://192.168.0.3:3000/invoice/cancelpayment/5QK561SRHDU";
+
+
+  String URL_test3="http://192.168.0.3:3000/invoice/paymentupdates/";
+
+  // http://51.158.68.20:4000/invoice/dynamicscheduledetails/lntb30n1pdahmpwpp5302euwed297nplvzgvp5wwzqkwesyqmxsqs8lqxey7zds0zp6ljqdpj0v38qcted4jkuazyv9ujyw3zxy3zcgnpd4hh2mn5ygazyvez05cqzyspxv0xkgstr8dsm0x8cgrh7c65a5q8kac6vx5t2m4vdmvl5uujt9hus0ux7959zzd4hz9kpae7kameq02m24xz7urxraylrx0f56kmysq2ufrut
 
 
 

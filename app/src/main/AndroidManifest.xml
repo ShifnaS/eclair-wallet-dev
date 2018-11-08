@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="fr.acinq.eclair.wallet"
-  xmlns:tools="http://schemas.android.com/tools">
+  xmlns:tools="http://schemas.android.com/tools"
+  package="fr.acinq.eclair.wallet">
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -63,8 +63,8 @@
       android:noHistory="true"
       android:parentActivityName=".activities.StartupActivity"
       android:screenOrientation="portrait"
-      android:windowSoftInputMode="stateHidden"
-      android:theme="@style/PrimaryBgTheme" />
+      android:theme="@style/PrimaryBgTheme"
+      android:windowSoftInputMode="stateHidden" />
     <activity
       android:name=".activities.HomeActivity"
       android:label="@string/app_name"
@@ -160,9 +160,9 @@
     <activity
       android:name=".activities.LogsSettingsActivity"
       android:label="@string/menu_settings_logging"
-      android:windowSoftInputMode="stateHidden"
       android:parentActivityName=".activities.PreferencesActivity"
-      android:screenOrientation="portrait" />
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="stateHidden" />
 
     <!-- providers -->
     <provider
@@ -172,9 +172,21 @@
       android:grantUriPermissions="true">
       <meta-data
         android:name="android.support.FILE_PROVIDER_PATHS"
-        android:resource="@xml/provider_paths"/>
+        android:resource="@xml/provider_paths" />
     </provider>
-
+    <!-- Firebase Notifications -->
+    <service android:name=".services.MyFirebaseMessagingService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT" />
+      </intent-filter>
+    </service>
+    <service android:name=".services.MyFirebaseInstanceIDService">
+      <intent-filter>
+        <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+      </intent-filter>
+    </service>
+    <!-- ./Firebase Notifications -->
+    <activity android:name=".activities.NotificationActivity"></activity>
   </application>
 
 </manifest>

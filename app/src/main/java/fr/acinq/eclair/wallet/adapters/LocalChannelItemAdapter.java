@@ -16,6 +16,7 @@
 
 package fr.acinq.eclair.wallet.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,7 @@ public class LocalChannelItemAdapter extends RecyclerView.Adapter<LocalChannelIt
   private String fiatCode = Constants.FIAT_USD;
   private CoinUnit prefUnit = CoinUtils.getUnitFromString(Constants.BTC_CODE);
   private boolean displayAmountAsFiat = false; // by default always show amounts in bitcoin
-
+  Context context;
   public LocalChannelItemAdapter(List<LocalChannel> channels) {
     this.channels = channels;
   }

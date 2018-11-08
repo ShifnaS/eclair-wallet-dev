@@ -168,6 +168,9 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
       // app may be started with a payment request intent
       readURIIntent(getIntent());
     }
+
+
+  //  mBinding.rawJson.getText().toString();
   }
 
   private void setUpTabs(final Bundle savedInstanceState) {
@@ -323,6 +326,9 @@ public class HomeActivity extends EclairActivity implements SharedPreferences.On
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.menu_home_notifications:
+        startActivity(new Intent(this, NotificationActivity.class));
+        return true;
       case R.id.menu_home_networkinfos:
         startActivity(new Intent(this, NetworkInfosActivity.class));
         return true;

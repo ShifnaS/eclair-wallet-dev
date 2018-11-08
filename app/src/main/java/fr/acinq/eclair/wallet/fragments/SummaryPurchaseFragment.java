@@ -215,12 +215,6 @@ public class SummaryPurchaseFragment extends Fragment {
                 {
 
 
-                 // JSONObject jsonObject=summaryPurchaseViewModel.GetInvoiceID(postParam);
-
-             /*     LocalChannel channel = null;
-                  String channel_id=channel.getChannelId();
-                  Toast.makeText(getContext(), "cahnnelid "+channel_id, Toast.LENGTH_SHORT).show();*/
-                 // Toast.makeText(getContext(), "hiii", Toast.LENGTH_SHORT).show();
 
                   VolleyLog.DEBUG = true;
                   RequestQueue queue = SingletonRequestQueue.getInstance(getContext()).getRequestQueue();
@@ -234,7 +228,7 @@ public class SummaryPurchaseFragment extends Fragment {
                       @Override
                       public void onResponse(JSONObject jsonObject) {
                         Log.e("RESPONSE", jsonObject.toString());
-                        Toast.makeText(getContext(), "Response "+jsonObject.toString(), Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getContext(), "Response "+jsonObject.toString(), Toast.LENGTH_SHORT).show();
                         try {
                           Boolean error;
                           String invoice_id="";

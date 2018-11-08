@@ -11,95 +11,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal|center_vertical"
+        android:gravity="center_horizontal"
         android:id="@+id/content_invoice_Schedule"
         >
+      <LinearLayout
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corner_button"
 
-        <TableLayout
-            android:layout_width="match_parent"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+        <LinearLayout
+          android:background="@color/primary_light_x1"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:gravity="center"
+          android:orientation="horizontal">
+
+
+          <TextView
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textStyle="bold"
+
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@drawable/rounded_corner_button"
+            android:textSize="@dimen/textSize"
+            android:text="@string/the_following_regular_payments_are_awaiting_your_authorisation_untick_any_payments_you_no_longer_wish_to_pay"
+            />
 
-            >
-            <TableRow
-                android:background="@color/primary_light_x1"
-                android:padding="8dp">
 
-                <TextView
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                  android:textSize="@dimen/textSize"
-                    android:text="Invoice Number"
-                    android:textColor="@android:color/white" />
-                <TextView
-                    android:textStyle="bold"
-                  android:textSize="@dimen/textSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/payment"
-                    android:textColor="@android:color/white" />
-            </TableRow>
-            <TableRow
-                android:padding="8dp"
-                >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Nougat"
-                  android:textSize="@dimen/textSize"
-                    android:textColor="@color/grey_4" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="24"
-                  android:textSize="@dimen/textSize"
-                    android:textColor="@color/grey_4" />
-            </TableRow>
-            <TableRow
-                android:padding="8dp">
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+          android:id="@+id/recyclerview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Marshmallow"
-                  android:textSize="@dimen/textSize"
-                    android:textColor="@color/grey_4" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="23"
-                  android:textSize="@dimen/textSize"
-                    android:textColor="@color/grey_4" />
-            </TableRow>
-            <TableRow
-                android:padding="8dp">
+        </android.support.v7.widget.RecyclerView>
+      </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Android Lollipop"
-                  android:textSize="@dimen/textSize"
-                    android:textColor="@color/grey_4" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                  android:textSize="@dimen/textSize"
-                    android:text="21"
-                    android:textColor="@color/grey_4" />
-            </TableRow>
-        </TableLayout>
-        <Button
+
+
+      <Button
             android:id="@+id/cancel"
             android:layout_width="150dp"
             android:layout_height="40dp"

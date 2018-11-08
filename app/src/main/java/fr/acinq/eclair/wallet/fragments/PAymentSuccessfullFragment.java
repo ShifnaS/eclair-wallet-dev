@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import fr.acinq.eclair.wallet.R;
 import fr.acinq.eclair.wallet.activities.HomeActivity;
@@ -40,14 +43,17 @@ public class PAymentSuccessfullFragment extends Fragment {
     String day=bundle.getString("day");
     String month=bundle.getString("month");
     TextView textView=root.findViewById(R.id.success);
-    textView.setText("payment successfull  \n \n \n \n Your next Payment will be on "+month+" "+day);
+    textView.setText("payment successfull  \n \n \n \n Your next Payment will be on month: "+month+" day:"+day);
     binding.setPaymentSuccesfullPresenter(new PaymentSuccesfullPresenter() {
       @Override
       public void ok() {
 
-        Intent intent=new Intent(getContext(),HomeActivity.class);
-        startActivity(intent);
-        getActivity().finish();
+        Fragment fragment = new LightningFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(((ViewGroup)(getView().getParent())).getId(), fragment);
+        //  fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
       }
     });
